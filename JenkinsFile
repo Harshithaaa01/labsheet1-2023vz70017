@@ -23,10 +23,23 @@ pipeline {
 
         stage('Package') {
             steps {
-                echo 'Packaging python file into wheel'
+                echo 'Packaging python file into wheel: calculator-1.0.0.whl'
                 sh '''
-                    pip3 install --user wheel setuptools
+                    # Install build tools
+                    python3 -m pip install --user --upgrade pip
+                    python3 -m pip install --user setuptools wheel
+
+                    # Clean previous builds
+                    rm -rf build dist *.egg-info
+
+                    # Build wheel
                     python3 setup.py bdist_wheel
+
+                    # Rename wheel to exact required name
+                    mv dist/*.whl dist/calculator-1.0.0.whl
+
+                    # Verify
+                    ls -l dist
                 '''
             }
         }
