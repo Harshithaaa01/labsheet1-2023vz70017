@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat 'gradlew clean test jacocoTestReport'
+                bat 'gradlew clean build jacocoTestReport'
             }
         }
 
